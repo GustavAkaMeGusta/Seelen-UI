@@ -334,6 +334,11 @@ impl Window {
     }
 
     pub fn show_window(&self, command: SHOW_WINDOW_CMD) -> Result<()> {
+        if !self.is_window() {
+            log::warn!("show_window called with invalid handle: {:#x}", self.address());
+            return Ok(());
+        }
+
         if self.process().open_handle().is_ok() {
             WindowsApi::show_window(self.hwnd(), command)
         } else {
@@ -345,6 +350,14 @@ impl Window {
     }
 
     pub fn show_window_async(&self, command: SHOW_WINDOW_CMD) -> Result<()> {
+        if !self.is_window() {
+            log::warn!(
+                "show_window_async called with invalid handle: {:#x}",
+                self.address()
+            );
+            return Ok(());
+        }
+
         if self.process().open_handle().is_ok() {
             WindowsApi::show_window_async(self.hwnd(), command)
         } else {
@@ -356,6 +369,11 @@ impl Window {
     }
 
     pub fn set_position(&self, rect: &RECT, flags: SET_WINDOW_POS_FLAGS) -> Result<()> {
+        if !self.is_window() {
+            log::warn!("set_position called with invalid handle: {:#x}", self.address());
+            return Ok(());
+        }
+
         if self.process().open_handle().is_ok() {
             WindowsApi::set_position(self.hwnd(), None, rect, flags)
         } else {
@@ -371,6 +389,11 @@ impl Window {
     }
 
     pub fn focus(&self) -> Result<()> {
+        if !self.is_window() {
+            log::warn!("focus called with invalid handle: {:#x}", self.address());
+            return Ok(());
+        }
+
         if self.process().open_handle().is_ok() {
             WindowsApi::set_foreground(self.hwnd())
         } else {
