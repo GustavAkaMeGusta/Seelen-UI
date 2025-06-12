@@ -102,7 +102,7 @@ unsafe fn _create_background_window(done: &crossbeam_channel::Sender<()>) -> Res
         std::thread::sleep(std::time::Duration::from_millis(100));
     });
 
-    // register window to recieve device notifications for monitor changes
+    // register window to receive device notifications for monitor changes
     {
         let mut notification_filter = DEV_BROADCAST_DEVICEINTERFACE_W {
             dbcc_size: std::mem::size_of::<DEV_BROADCAST_DEVICEINTERFACE_W>() as u32,
@@ -118,7 +118,7 @@ unsafe fn _create_background_window(done: &crossbeam_channel::Sender<()>) -> Res
         )?;
     }
 
-    // register window to recieve shell events
+    // register window to receive shell events
     {
         RegisterShellHookWindow(hwnd).ok().filter_fake_error()?;
         let msg = WindowsString::from("SHELLHOOK");
