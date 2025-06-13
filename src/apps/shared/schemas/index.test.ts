@@ -56,4 +56,63 @@ describe('VariableConvention', () => {
     expect(VariableConvention.deepKeyParser(camelObject, VariableConvention.camelToSnake)).toEqual(snakeObject);
     expect(VariableConvention.deepKeyParser(snakeObject, VariableConvention.snakeToCamel)).toEqual(camelObject);
   });
+
+  test('camelToUser', () => {
+    expect(VariableConvention.camelToUser('helloWorld')).toBe('hello world');
+    expect(VariableConvention.camelToUser('HelloWorld')).toBe('hello world');
+    expect(VariableConvention.camelToUser('testingCamelCaseText')).toBe('testing camel case text');
+    expect(VariableConvention.camelToUser('helloWorld123')).toBe('hello world 1 2 3');
+  });
+
+  test('fromSnakeToCamel', () => {
+    const snake = {
+      hello_world: {
+        my_world: 1,
+      },
+      array_test: [
+        {
+          deep_case: 'text',
+        },
+      ],
+    };
+
+    const camel = {
+      helloWorld: {
+        myWorld: 1,
+      },
+      arrayTest: [
+        {
+          deepCase: 'text',
+        },
+      ],
+    };
+
+    expect(VariableConvention.fromSnakeToCamel(snake)).toEqual(camel);
+  });
+
+  test('fromCamelToSnake', () => {
+    const camel = {
+      helloWorld: {
+        myWorld: 1,
+      },
+      arrayTest: [
+        {
+          deepCase: 'text',
+        },
+      ],
+    };
+
+    const snake = {
+      hello_world: {
+        my_world: 1,
+      },
+      array_test: [
+        {
+          deep_case: 'text',
+        },
+      ],
+    };
+
+    expect(VariableConvention.fromCamelToSnake(camel)).toEqual(snake);
+  });
 });
