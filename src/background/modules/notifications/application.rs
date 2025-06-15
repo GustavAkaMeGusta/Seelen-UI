@@ -26,7 +26,7 @@ use windows::{
 use crate::{
     error_handler::Result,
     event_manager, log_error,
-    modules::uwp::get_hightest_quality_posible,
+    modules::uwp::get_highest_quality_possible,
     seelen::get_app_handle,
     trace_lock,
     utils::{convert_file_to_src, icon_extractor::extract_and_save_icon_umid, spawn_named_thread},
@@ -211,7 +211,7 @@ impl NotificationManager {
                 "http" | "https" => {}
                 "ms-appx" | "ms-appx-web" => {
                     let path = package_path.clone()?.join(uri_path);
-                    if let Some((path, _)) = get_hightest_quality_posible(&path) {
+                    if let Some((path, _)) = get_highest_quality_possible(&path) {
                         log::debug!("  Resolved path: {}", path.display());
                         image.src = convert_file_to_src(&path);
                     } else {

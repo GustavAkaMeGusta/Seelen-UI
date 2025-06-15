@@ -29,7 +29,7 @@ lazy_static! {
 }
 
 // returns light and dark icons
-pub fn get_hightest_quality_posible(icon_path: &Path) -> Option<(PathBuf, PathBuf)> {
+pub fn get_highest_quality_possible(icon_path: &Path) -> Option<(PathBuf, PathBuf)> {
     let filename = icon_path.file_stem()?.to_str()?;
     let extension = icon_path.extension()?.to_str()?;
 
@@ -124,7 +124,7 @@ impl UwpManager {
         let app_manifest = match manifest.get_app(&app_info.Id()?.to_string_lossy()) {
             Some(app) => app,
             None => {
-                return get_hightest_quality_posible(&store_logo)
+                return get_highest_quality_possible(&store_logo)
                     .ok_or("Could not find package logo path".into())
             }
         };
@@ -132,9 +132,9 @@ impl UwpManager {
         let app_logo_44 = package_path.join(&app_manifest.visual_elements.logo_44);
         let app_logo_150 = package_path.join(&app_manifest.visual_elements.logo_150);
 
-        get_hightest_quality_posible(&app_logo_44)
-            .or_else(|| get_hightest_quality_posible(&app_logo_150))
-            .or_else(|| get_hightest_quality_posible(&store_logo))
+        get_highest_quality_possible(&app_logo_44)
+            .or_else(|| get_highest_quality_possible(&app_logo_150))
+            .or_else(|| get_highest_quality_possible(&store_logo))
             .ok_or_else(|| format!("App icon not found for {app_umid}").into())
     }
 }
